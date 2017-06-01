@@ -41,6 +41,7 @@ export default class Message extends React.Component {
   }
 
   renderAvatar() {
+    if(this.props.avatar == null) return null;
     if (this.props.user._id !== this.props.currentMessage.user._id) {
       const avatarProps = this.getInnerComponentProps();
       return <Avatar {...avatarProps}/>;
@@ -50,7 +51,7 @@ export default class Message extends React.Component {
 
   render() {
     return (
-      <View>
+      <View flex={1}>
         {this.renderDay()}
         <View style={[styles[this.props.position].container, {
           marginBottom: isSameUser(this.props.currentMessage, this.props.nextMessage) ? 2 : 10,

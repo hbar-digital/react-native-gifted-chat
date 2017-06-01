@@ -210,15 +210,17 @@ class GiftedChat extends React.Component {
     this.setKeyboardHeight(e.endCoordinates ? e.endCoordinates.height : e.end.height);
     this.setBottomOffset(this.props.bottomOffset);
     const newMessagesContainerHeight = (this.getMaxHeight() - (this.state.composerHeight + (this.getMinInputToolbarHeight() - MIN_COMPOSER_HEIGHT))) - this.getKeyboardHeight() + this.getBottomOffset();
-    if (this.props.isAnimated === true) {
-      Animated.timing(this.state.messagesContainerHeight, {
-        toValue: newMessagesContainerHeight,
-        duration: 210,
-      }).start();
-    } else {
-      this.setState({
-        messagesContainerHeight: newMessagesContainerHeight,
-      });
+    if(Platform.OS === 'ios') {
+      if (this.props.isAnimated === true) {
+        Animated.timing(this.state.messagesContainerHeight, {
+          toValue: newMessagesContainerHeight,
+          duration: 210,
+        }).start();
+      } else {
+        this.setState({
+          messagesContainerHeight: newMessagesContainerHeight,
+        });
+      }
     }
   }
 
@@ -227,15 +229,17 @@ class GiftedChat extends React.Component {
     this.setKeyboardHeight(0);
     this.setBottomOffset(0);
     const newMessagesContainerHeight = this.getMaxHeight() - (this.state.composerHeight + (this.getMinInputToolbarHeight() - MIN_COMPOSER_HEIGHT));
-    if (this.props.isAnimated === true) {
-      Animated.timing(this.state.messagesContainerHeight, {
-        toValue: newMessagesContainerHeight,
-        duration: 210,
-      }).start();
-    } else {
-      this.setState({
-        messagesContainerHeight: newMessagesContainerHeight,
-      });
+    if(Platform.OS === 'ios') {
+      if (this.props.isAnimated === true) {
+        Animated.timing(this.state.messagesContainerHeight, {
+          toValue: newMessagesContainerHeight,
+          duration: 210,
+        }).start();
+      } else {
+        this.setState({
+          messagesContainerHeight: newMessagesContainerHeight,
+        });
+      }
     }
   }
 
@@ -425,12 +429,12 @@ class GiftedChat extends React.Component {
   render() {
     if (this.state.isInitialized === true) {
       return (
-        <ActionSheet ref={component => this._actionSheetRef = component}>
+        // <ActionSheet ref={component => this._actionSheetRef = component}>
           <View style={styles.container} onLayout={this.onMainViewLayout}>
             {this.renderMessages()}
             {this.renderInputToolbar()}
           </View>
-        </ActionSheet>
+        // </ActionSheet>
       );
     }
     return (
